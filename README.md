@@ -1,6 +1,6 @@
 # Wil's Playground Application
 
-This repository contains the Kubernetes manifests for deploying Wil's playground application from Docker Hub: https://hub.docker.com/r/wil42/playground
+This GitOps repository is used by ArgoCD to deploy Wil's playground application from Docker Hub: https://hub.docker.com/r/wil42/playground
 
 ## Application Details
 
@@ -10,15 +10,17 @@ This repository contains the Kubernetes manifests for deploying Wil's playground
 - **Service Type**: LoadBalancer
 - **Replicas**: 1
 
-## Structure
+## Repository Structure
 
 ```
 wil-playground-argocd/
-├── namespace.yaml    # Dev namespace
-├── deployment.yaml   # Deployment with wil42/playground:v1
-├── service.yaml      # LoadBalancer service on port 8888
-├── ingress.yaml      # Ingress configuration
-└── README.md
+├── README.md         # This file
+├── setup-github.sh   # Helper script to push to GitHub
+└── manifests/
+    ├── namespace.yaml    # Dev namespace
+    ├── deployment.yaml   # Deployment with wil42/playground:v1
+    ├── service.yaml      # LoadBalancer service on port 8888
+    └── ingress.yaml      # Ingress configuration
 ```
 
 ## GitOps Workflow
@@ -34,12 +36,14 @@ To change the application version:
 
 Example:
 ```bash
-# Change from v1 to v2
-sed -i 's/wil42\/playground:v1/wil42\/playground:v2/g' deployment.yaml
+# Edit the file
+vim manifests/deployment.yaml
+# Change: image: wil42/playground:v1
+# To:     image: wil42/playground:v2
 
 # Commit and push
-git add deployment.yaml
-git commit -m "Rollback to v2"
+git add manifests/deployment.yaml
+git commit -m "Update to v2"
 git push
 ```
 
@@ -52,7 +56,7 @@ kubectl get pods -n dev
 kubectl get svc -n dev
 
 # Test the application
-curl http://localhost:8888/
+curl http://localhost:8888
 # Expected response: {"status":"ok", "message": "v1"}
 ```
 

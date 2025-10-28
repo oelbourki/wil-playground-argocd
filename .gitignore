@@ -1,0 +1,7 @@
+# Ignore temp files
+*.tmp
+.DS_Store
+
+# Allow manifests directory
+!manifests/
+
