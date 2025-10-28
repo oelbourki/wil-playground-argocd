@@ -8,8 +8,10 @@ metadata:
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
+  ingressClassName: traefik
   rules:
-  - http:
+  - host: app.localhost
+    http:
       paths:
       - path: /
         pathType: Prefix
