@@ -35,7 +35,7 @@ fi
 # Get GitHub repository URL
 echo -e "${YELLOW}Enter your GitHub repository URL for wil-playground:${NC}"
 echo "Example: https://github.com/Florian-A/wil-playground-argocd.git"
-echo "Make sure the repository includes your group member's login in the name (e.g., agi-wil-playground)"
+echo "Make sure the repository includes your group member's login in the name (e.g., oelbourki-wil-playground)"
 read -p "Repository URL: " REPO_URL
 
 if [ -z "$REPO_URL" ]; then
