@@ -14,13 +14,14 @@ This GitOps repository is used by ArgoCD to deploy Wil's playground application 
 
 ```
 wil-playground-argocd/
-├── README.md         # This file
-├── setup-github.sh   # Helper script to push to GitHub
+├── README.md              # This file
+├── deploy-and-test.sh     # Deploy and test the application
+├── setup-github.sh        # Helper script to push to GitHub
 └── manifests/
-    ├── namespace.yaml    # Dev namespace
-    ├── deployment.yaml   # Deployment with wil42/playground:v1
-    ├── service.yaml      # LoadBalancer service on port 8888
-    └── ingress.yaml      # Ingress configuration
+    ├── namespace.yaml     # Dev namespace
+    ├── deployment.yaml    # Deployment with wil42/playground:v1
+    ├── service.yaml       # LoadBalancer service on port 8888
+    └── ingress.yaml       # Ingress configuration (if needed)
 ```
 
 ## GitOps Workflow
@@ -47,16 +48,31 @@ git commit -m "Update to v2"
 git push
 ```
 
-### Testing the Application
+### Quick Deploy and Test
 
-After deployment, you can test the application:
+Use the provided script to deploy and test the application:
+
+```bash
+./deploy-and-test.sh
+```
+
+This script will:
+1. Check kubectl connectivity
+2. Apply all manifests (namespace, deployment, service)
+3. Wait for deployment to be ready
+4. Test the application with curl
+5. Verify the response format and version
+
+### Manual Testing
+
+After deployment, you can test the application manually:
 ```bash
 # Check status
 kubectl get pods -n dev
 kubectl get svc -n dev
 
 # Test the application
-curl http://localhost:8888
+curl http://localhost:8888/
 # Expected response: {"status":"ok", "message": "v1"}
 ```
 
