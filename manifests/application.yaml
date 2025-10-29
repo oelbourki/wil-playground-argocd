@@ -27,10 +27,11 @@ kind: Service
 metadata:
   name: svc-wil
 spec:
+  type: LoadBalancer
   selector:
     app: wil
   ports:
     - name: http
       protocol: TCP
-      port: 8080
+      port: 8888
       targetPort: 8888
